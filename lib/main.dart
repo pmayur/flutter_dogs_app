@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:dogs_app/dog_model.dart';
 import 'package:dogs_app/dog_list.dart';
+import 'package:dogs_app/new_dog_form.dart';
 
 void main() => runApp(MyApp());
 
@@ -39,12 +40,31 @@ class _MyHomePageState extends State<MyHomePage> {
     ..add(Dog('Buddy', 'North Pole, Earth', 'Self proclaimed human lover.'))
     ..add(Dog('Burg', 'South Pole, Earth', 'Self proclaimed hugger.'));
 
+  Future _showNewDogForm() async {
+    Dog newDog = await Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (BuildContext context) {
+          return AddDogFormPage();
+        },
+      ),
+    );
+    if (newDog != null) {
+      initialDoggos.add(newDog);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
         backgroundColor: Colors.black87,
+        actions: [
+         IconButton(
+          icon: Icon(Icons.add),
+          onPressed: _showNewDogForm,
+        ),
+      ],
       ),
       body: Container(
         child: DogList(initialDoggos),
