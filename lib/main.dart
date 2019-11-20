@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:dogs_app/dog_model.dart';
-import 'package:dogs_app/dog_card.dart';
+import 'package:dogs_app/dog_list.dart';
 
 void main() => runApp(MyApp());
 
@@ -36,7 +36,8 @@ class _MyHomePageState extends State<MyHomePage> {
     ..add(Dog('Rod Stewart', 'Prague, CZ',
         'Star good boy on international snooze team.'))
     ..add(Dog('Herbert', 'Dallas, TX, USA', 'A Very Good Boy'))
-    ..add(Dog('Buddy', 'North Pole, Earth', 'Self proclaimed human lover.'));
+    ..add(Dog('Buddy', 'North Pole, Earth', 'Self proclaimed human lover.'))
+    ..add(Dog('Burg', 'South Pole, Earth', 'Self proclaimed hugger.'));
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Colors.black87,
       ),
       body: Container(
-        child: DogCard(initialDoggos[1]),
+        child: DogList(initialDoggos),
       ),
     );
   }
