@@ -17,16 +17,42 @@ class _DogCardState extends State<DogCard> {
   String renderUrl;
 
   Widget get dogImage {
-    return Container(
-      width: 100.0,
-      height: 100.0,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(renderUrl ?? ''),
+    var dogAvatar = Hero(
+      tag: dog,
+      child: Container(
+        width: 100.0,
+        height: 100.0,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(renderUrl ?? ''),
+          ),
         ),
       ),
+    );
+
+    var placeholder = Container(
+        width: 100.0,
+        height: 100.0,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [Colors.black54, Colors.black, Colors.blueGrey[600]],
+          ),
+        ),
+        alignment: Alignment.center,
+        child: Icon(Icons.image));
+
+    return AnimatedCrossFade(
+      firstChild: placeholder,
+      secondChild: dogAvatar,
+      crossFadeState: renderUrl == null
+          ? CrossFadeState.showFirst
+          : CrossFadeState.showSecond,
+      duration: Duration(milliseconds: 1000),
     );
   }
 
@@ -81,30 +107,20 @@ class _DogCardState extends State<DogCard> {
   }
 
   showDogDetailPage() {
-  // Navigator.of(context) accesses the current app's navigator.
-  // Navigators can 'push' new routes onto the stack,
-  // as well as pop routes off the stack.
-  //
-  // This is the easiest way to build a new page on the fly
-  // and pass that page some state from the current page.
-  Navigator.of(context).push(
-    MaterialPageRoute(
-      // builder methods always take context!
-      builder: (context) {
-        return DogDetailPage(dog);
-      },
-    ),
-  );
-}
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (context) {
+          return DogDetailPage(dog);
+        },
+      ),
+    );
+  }
 
   _DogCardState(this.dog);
 
   @override
   Widget build(BuildContext context) {
-    // InkWell is a special Material widget that makes its children tappable
-    // and adds Material Design ink ripple when tapped.
     return InkWell(
-      // onTap is a callback that will be triggered when tapped.
       onTap: showDogDetailPage,
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),

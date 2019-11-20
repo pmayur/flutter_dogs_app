@@ -44,8 +44,7 @@ class _DogDetailPageState extends State<DogDetailPage> {
                 width: 50.0,
                 alignment: Alignment.center,
                 child: Text('${_sliderValue.toInt()}',
-                    style: Theme.of(context).textTheme.display1
-                ),
+                    style: Theme.of(context).textTheme.display1),
               ),
             ],
           ),
@@ -63,40 +62,43 @@ class _DogDetailPageState extends State<DogDetailPage> {
     );
   }
 
-void updateRating() {
-  if (_sliderValue < 6) {
-    _ratingErrorDialog();
-  } else {
-    setState(() => widget.dog.rating = _sliderValue.toInt());
+  void updateRating() {
+    if (_sliderValue < 6) {
+      _ratingErrorDialog();
+    } else {
+      setState(() => widget.dog.rating = _sliderValue.toInt());
+    }
   }
-}
 
   Widget get dogImage {
-    return Container(
-      height: dogAvatarSize,
-      width: dogAvatarSize,
-      decoration: BoxDecoration(
-        shape: BoxShape.circle,
-        boxShadow: [
-          const BoxShadow(
-              offset: const Offset(1.0, 2.0),
-              blurRadius: 2.0,
-              spreadRadius: -1.0,
-              color: const Color(0x33000000)),
-          const BoxShadow(
-              offset: const Offset(2.0, 1.0),
-              blurRadius: 3.0,
-              spreadRadius: 0.0,
-              color: const Color(0x24000000)),
-          const BoxShadow(
-              offset: const Offset(3.0, 1.0),
-              blurRadius: 4.0,
-              spreadRadius: 2.0,
-              color: const Color(0x1F000000)),
-        ],
-        image: DecorationImage(
-          fit: BoxFit.cover,
-          image: NetworkImage(widget.dog.imageUrl),
+    return Hero(
+      tag: widget.dog,
+      child: Container(
+        height: dogAvatarSize,
+        width: dogAvatarSize,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          boxShadow: [
+            const BoxShadow(
+                offset: const Offset(1.0, 2.0),
+                blurRadius: 2.0,
+                spreadRadius: -1.0,
+                color: const Color(0x33000000)),
+            const BoxShadow(
+                offset: const Offset(2.0, 1.0),
+                blurRadius: 3.0,
+                spreadRadius: 0.0,
+                color: const Color(0x24000000)),
+            const BoxShadow(
+                offset: const Offset(3.0, 1.0),
+                blurRadius: 4.0,
+                spreadRadius: 2.0,
+                color: const Color(0x1F000000)),
+          ],
+          image: DecorationImage(
+            fit: BoxFit.cover,
+            image: NetworkImage(widget.dog.imageUrl),
+          ),
         ),
       ),
     );
