@@ -7,11 +7,17 @@ class AddDogFormPage extends StatefulWidget {
 }
 
 class _AddDogFormPageState extends State<AddDogFormPage> {
-
   /* Function to Submit the Form */
   void submitPup(BuildContext context) {
     if (nameController.text.isEmpty) {
-      print('Dogs need names!');
+      if (nameController.text.isEmpty) {
+        Scaffold.of(context).showSnackBar(
+          SnackBar(
+            backgroundColor: Colors.redAccent,
+            content: Text('Pups neeed names!'),
+          ),
+        );
+      }
     } else {
       var newDog = Dog(nameController.text, locationController.text,
           descriptionController.text);
