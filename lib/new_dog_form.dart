@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:dogs_app/dog_model.dart';
 
 class AddDogFormPage extends StatefulWidget {
   @override
@@ -6,9 +7,24 @@ class AddDogFormPage extends StatefulWidget {
 }
 
 class _AddDogFormPageState extends State<AddDogFormPage> {
+
+  /* Function to Submit the Form */
+  void submitPup(BuildContext context) {
+    if (nameController.text.isEmpty) {
+      print('Dogs need names!');
+    } else {
+      var newDog = Dog(nameController.text, locationController.text,
+          descriptionController.text);
+      Navigator.of(context).pop(newDog);
+    }
+  }
+
+  TextEditingController nameController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+  TextEditingController descriptionController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Add a new Dog'),
@@ -26,33 +42,36 @@ class _AddDogFormPageState extends State<AddDogFormPage> {
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: TextField(
+                    controller: nameController,
+                    onChanged: (v) => nameController.text = v,
                     decoration: InputDecoration(
-                    labelText: 'Name the Pup',
-                  )
-                ),
+                      labelText: 'Name the Pup',
+                    )),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: TextField(
+                    controller: locationController,
+                    onChanged: (v) => locationController.text = v,
                     decoration: InputDecoration(
-                    labelText: "Pup's location",
-                  )
-                ),
+                      labelText: "Pups location",
+                    )),
               ),
               Padding(
                 padding: const EdgeInsets.only(bottom: 8.0),
                 child: TextField(
-                  decoration: InputDecoration(
-                    labelText: 'All about the pup',
-                  ),
-                ),
+                    controller: descriptionController,
+                    onChanged: (v) => descriptionController.text = v,
+                    decoration: InputDecoration(
+                      labelText: 'All about the pup',
+                    )),
               ),
               Padding(
-                padding: const EdgeInsets.all(11.0),
+                padding: const EdgeInsets.all(10.0),
                 child: Builder(
                   builder: (context) {
                     return RaisedButton(
-                      onPressed: () => print('PRESSED'),
+                      onPressed: () => submitPup(context),
                       color: Colors.indigoAccent,
                       child: Text('Submit Pup'),
                     );
