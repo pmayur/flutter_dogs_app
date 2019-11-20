@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'dog_model.dart';
+import 'dog_detail_page.dart';
 
 class DogCard extends StatefulWidget {
   final Dog dog;
@@ -79,23 +80,46 @@ class _DogCardState extends State<DogCard> {
     }
   }
 
+  showDogDetailPage() {
+  // Navigator.of(context) accesses the current app's navigator.
+  // Navigators can 'push' new routes onto the stack,
+  // as well as pop routes off the stack.
+  //
+  // This is the easiest way to build a new page on the fly
+  // and pass that page some state from the current page.
+  Navigator.of(context).push(
+    MaterialPageRoute(
+      // builder methods always take context!
+      builder: (context) {
+        return DogDetailPage(dog);
+      },
+    ),
+  );
+}
+
   _DogCardState(this.dog);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 115.0,
-      child: Stack(
-        children: <Widget>[
-          Positioned(
-            left: 50.0,
-            child: dogCard,
+    // InkWell is a special Material widget that makes its children tappable
+    // and adds Material Design ink ripple when tapped.
+    return InkWell(
+      // onTap is a callback that will be triggered when tapped.
+      onTap: showDogDetailPage,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8.0),
+        child: Container(
+          height: 115.0,
+          child: Stack(
+            children: <Widget>[
+              Positioned(
+                left: 50.0,
+                child: dogCard,
+              ),
+              Positioned(top: 7.5, child: dogImage),
+            ],
           ),
-          Positioned(
-            top: 7.5,
-            child: dogImage
-          ),
-        ],
+        ),
       ),
     );
   }
